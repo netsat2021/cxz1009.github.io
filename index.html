@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset = "utf-8">
+  <title>Dave, who likes to chat a lot</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
+</head>
+<body>
+  <img src="C:\Users\chenx\projects\huma\final\background.jpg" alt="Background Image" style="width:100%; height: auto;"></img>
+  <script>
+    !function(window){
+      const host="https://app.heygen.com",
+            url=host+"/guest/streaming-embed?share=eyJxdWFsaXR5IjoiaGlnaCIsImF2YXRhck5hbWUiOiJUeWxlci1pbnNoaXJ0LTIwMjIwNzIxIiwi%0D%0Adm9pY2UiOnsidm9pY2VfaWQiOiJjY2YwNTA4MjE5ODI0MGYxODA1M2U1N2FjMWRjMmI1YyJ9LCJw%0D%0AcmV2aWV3SW1nIjoiaHR0cHM6Ly9maWxlcy5oZXlnZW4uYWkvYXZhdGFyL3YzLzc5YjI0NTU2MWFk%0D%0ANDQ4ZTc5NmI3ZTc3Y2QyNzczZDBiXzE0MjYzL3ByZXZpZXdfdGFsa18yLndlYnAiLCJuZWVkUmVt%0D%0Ab3ZlQmFja2dyb3VuZCI6dHJ1ZSwidXNlcm5hbWUiOiIyN2RlN2JjY2UxOWM0OGY4ODZmYTdjNWI0%0D%0AZjAyNzlhZSJ9&inIFrame=1",
+            clientWidth=document.body.clientWidth,
+            wrapDiv=document.createElement("div");
+      wrapDiv.id="heygen-streaming-embed";
+      const container=document.createElement("div");
+      container.id="heygen-streaming-container";
+      const stylesheet=document.createElement("style");
+      stylesheet.innerHTML=`
+        #heygen-streaming-embed {
+          z-index: 9999;
+          position: fixed;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 80%; /* Initial width */
+          height: auto; /* Height will be calculated based on width to maintain aspect ratio */
+          max-width: 1200px; /* Adjust as needed */
+          border-radius: 8px;
+          border: 0;
+          box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.12);
+          transition: all linear 0.1s;
+          overflow: hidden;
+          opacity: 0;
+          visibility: hidden;
+        }
+        #heygen-streaming-embed.show {
+          opacity: 1;
+          visibility: visible;
+        }
+        #heygen-streaming-container {
+          width: 100%;
+          height: 100%;
+        }
+        #heygen-streaming-container iframe {
+          width: 100%;
+          height: 100%;
+          border: 0;
+        }
+      `;
+      const iframe=document.createElement("iframe");
+      iframe.allowFullscreen=!1;
+      iframe.title="Streaming Embed";
+      iframe.role="dialog";
+      iframe.src=url;
+      let visible=!1,initial=!1;
+      window.addEventListener("message",(e=>{
+        e.origin===host&&e.data&&e.data.type&&"streaming-embed"===e.data.type&&("init"===e.data.action?(initial=!0,wrapDiv.classList.toggle("show",initial)):"show"===e.data.action?(visible=!0):"hide"===e.data.action&&(visible=!1))
+      }));
+      container.appendChild(iframe);
+      wrapDiv.appendChild(stylesheet);
+      wrapDiv.appendChild(container);
+      document.body.appendChild(wrapDiv);
+      
+      // Calculate height based on width to maintain 16:9 aspect ratio
+      const aspectRatio = 9 / 16;
+      const updateSize = () => {
+        const width = Math.min(clientWidth * 0.8, 1200); // 80% of client width or max 1200px
+        wrapDiv.style.width = `${width}px`;
+        wrapDiv.style.height = `${width * aspectRatio}px`;
+      };
+      
+      updateSize();
+      window.addEventListener('resize', updateSize);
+    }(globalThis);
+  </script>
+</
